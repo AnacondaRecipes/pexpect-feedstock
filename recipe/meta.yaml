@@ -1,13 +1,16 @@
+{% set name = "pexpect" %}
 {% set version = "4.2.1" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "3d132465a75b57aa818341c6521392a06cc660feb3988d7f1074f39bd23c9a92" %}
 
 package:
-  name: pexpect
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: pexpect-{{ version }}.tar.gz
-  url: https://github.com/pexpect/pexpect/archive/{{ version }}.tar.gz
-  sha256: f3e36792185a7b8b332a38846daa81d7e389688b7b63b9066d39c7f31a266a51
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  {{ hash_type }}: {{ hash_value }}
 
 build:
   number: 0
