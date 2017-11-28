@@ -1,7 +1,7 @@
 {% set name = "pexpect" %}
-{% set version = "4.2.1" %}
+{% set version = "4.3.0" %}
 {% set hash_type = "sha256" %}
-{% set hash_value = "3d132465a75b57aa818341c6521392a06cc660feb3988d7f1074f39bd23c9a92" %}
+{% set hash_value = "00ab0872f80f5db740499e7a1283a7c3b97bea542d72df84d83dea17d0afd2d9" %}
 
 package:
   name: {{ name|lower }}
@@ -30,6 +30,7 @@ test:
 about:
   home: http://pexpect.sourceforge.net/
   license: ISC
+  license_family: Other
   license_file: LICENSE
   summary: 'Pexpect makes Python a better tool for controlling other applications.'
   description: |
