@@ -1,7 +1,7 @@
 {% set name = "pexpect" %}
-{% set version = "4.3.1" %}
+{% set version = "4.4.0" %}
 {% set hash_type = "sha256" %}
-{% set hash_value = "8e287b171dbaf249d0b06b5f2e88cb7e694651d2d0b8c15bccb83170d3c55575" %}
+{% set hash_value = "67b85a1565968e3d5b5e7c9283caddc90c3947a2625bed1905be27bd5a03e47d" %}
 
 package:
   name: {{ name|lower }}
