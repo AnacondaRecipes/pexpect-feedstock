@@ -9,7 +9,7 @@ source:
   sha256: fc65a43959d153d0114afe13997d439c22823a27cefceb5ff35c2178c6784c0c
 
 build:
-  number: 2
+  number: 3
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
@@ -24,16 +24,19 @@ requirements:
 test:
   imports:
     - pexpect
-  commands:
-    - pip check
-  requires:
-    - pip
 
 about:
   home: http://pexpect.sourceforge.net/
   license: ISC
+  license_family: Other
   license_file: LICENSE
   summary: 'Pexpect makes Python a better tool for controlling other applications.'
+  description: |
+    Pexpect is a pure Python module for spawning child applications;
+    controlling them; and responding to expected patterns in their output.
+  doc_url: http://pexpect.readthedocs.org/
+  doc_source_url: https://github.com/pexpect/pexpect/blob/master/doc/index.rst
+  dev_url: https://github.com/pexpect/pexpect
 
 extra:
   recipe-maintainers:
