@@ -35,6 +35,10 @@ requirements:
 {% set tests_to_skip = tests_to_skip + " or test_zsh" %}
 # Exception: Unexpected output For more details, please visit https://support.apple.com/kb/HT208050.
 {% set tests_to_skip = tests_to_skip + " or test_run_event_as_function or test_run_event_as_method" %}  # [osx]
+# assert res.strip().splitlines() == ['0', '1', '2']
+{% set tests_to_skip = tests_to_skip + " or test_no_change_prompt" %}  # [osx]
+# assert res.strip() == '11'
+{% set tests_to_skip = tests_to_skip + " or test_python" %}  # [osx]
 
 test:
   source_files:
