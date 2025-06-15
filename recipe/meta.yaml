@@ -1,41 +1,58 @@
-{% set version = "4.8.0" %}
+{% set name = "pexpect" %}
+{% set version = "4.9.0" %}
 
 package:
-  name: pexpect
-  version: {{ version }}
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/p/pexpect/pexpect-{{ version }}.tar.gz
-  sha256: fc65a43959d153d0114afe13997d439c22823a27cefceb5ff35c2178c6784c0c
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name|lower }}-{{ version }}.tar.gz
+  sha256: ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f
 
 build:
-  number: 3
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
+  host:
     - python
     - pip
+    - setuptools
+    - wheel
   run:
     - python
     - ptyprocess >=0.5
 
+# AssertionError: bash: man: command not found
+{% set tests_to_skip = "test_pager_as_cat" %}
+# pexpect.exceptions.ExceptionPexpect: The command was not found or was not executable: zsh
+{% set tests_to_skip = tests_to_skip + " or test_zsh" %}
+
 test:
+  source_files:
+    - tests
   imports:
     - pexpect
+    - pexpect.popen_spawn
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v -k "not ({{ tests_to_skip }})" tests
 
 about:
-  home: http://pexpect.sourceforge.net/
+  home: http://pexpect.sourceforge.net
   license: ISC
   license_family: Other
   license_file: LICENSE
-  summary: 'Pexpect makes Python a better tool for controlling other applications.'
+  summary: Pexpect makes Python a better tool for controlling other applications.
   description: |
-    Pexpect is a pure Python module for spawning child applications;
-    controlling them; and responding to expected patterns in their output.
-  doc_url: http://pexpect.readthedocs.org/
-  doc_source_url: https://github.com/pexpect/pexpect/blob/master/doc/index.rst
+    Pexpect is a pure Python module for spawning child applications; controlling them; 
+    and responding to expected patterns in their output. Pexpect works like Don Libes’ Expect. 
+    Pexpect allows your script to spawn a child application and control it as if a human were typing commands.
+  doc_url: http://pexpect.readthedocs.org
   dev_url: https://github.com/pexpect/pexpect
 
 extra:
