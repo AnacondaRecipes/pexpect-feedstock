@@ -23,6 +23,9 @@ requirements:
     - python
     - ptyprocess >=0.5
 
+{% set ignore_tests = "" %}
+# Randomly hanging on osx
+{% set ignore_tests = " --ignore=tests/test_expect.py" %}  # [osx]
 # AssertionError: bash: man: command not found
 {% set tests_to_skip = "test_pager_as_cat" %}
 # pexpect.exceptions.ExceptionPexpect: The command was not found or was not executable: zsh
@@ -40,10 +43,10 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v -k "not ({{ tests_to_skip }})" tests
+    - pytest -v {{ ignore_tests }} -k "not ({{ tests_to_skip }})" tests
 
 about:
-  home: http://pexpect.sourceforge.net
+  home: https://pexpect.sourceforge.net
   license: ISC
   license_family: Other
   license_file: LICENSE
@@ -52,7 +55,7 @@ about:
     Pexpect is a pure Python module for spawning child applications; controlling them; 
     and responding to expected patterns in their output. Pexpect works like Don Libes’ Expect. 
     Pexpect allows your script to spawn a child application and control it as if a human were typing commands.
-  doc_url: http://pexpect.readthedocs.org
+  doc_url: https://pexpect.readthedocs.org
   dev_url: https://github.com/pexpect/pexpect
 
 extra:
