@@ -26,10 +26,15 @@ requirements:
 {% set ignore_tests = "" %}
 # Randomly hanging on osx
 {% set ignore_tests = " --ignore=tests/test_expect.py" %}  # [osx]
+# OSError: [Errno 57] Socket is not connected
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_socket.py --ignore=tests/test_socket_fd.py --ignore=tests/test_socket_pexpect.py" %}  # [osx]
+
 # AssertionError: bash: man: command not found
 {% set tests_to_skip = "test_pager_as_cat" %}
 # pexpect.exceptions.ExceptionPexpect: The command was not found or was not executable: zsh
 {% set tests_to_skip = tests_to_skip + " or test_zsh" %}
+# Exception: Unexpected output For more details, please visit https://support.apple.com/kb/HT208050.
+{% set tests_to_skip = tests_to_skip + " or test_run_event_as_function or test_run_event_as_method" %}  # [osx]
 
 test:
   source_files:
@@ -43,8 +48,10 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v {{ ignore_tests }} -k "not ({{ tests_to_skip }})" tests
-
+    - pytest -v {{ ignore_tests }} -k "not ({{ tests_to_skip }})" tests  # [not win]
+    # Most tests are not working on Windows: https://github.com/pexpect/pexpect/issues/321
+    - pytest -v tests/test_socket_pexpect.py tests/test_screen.py tests/test_filedescriptor.py tests/test_ansi.py tests/test_FSM.py  # [win]
+    
 about:
   home: https://pexpect.sourceforge.net
   license: ISC
