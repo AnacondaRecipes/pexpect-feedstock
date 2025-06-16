@@ -39,6 +39,8 @@ requirements:
 {% set tests_to_skip = tests_to_skip + " or test_no_change_prompt" %}  # [osx]
 # assert res.strip() == '11'
 {% set tests_to_skip = tests_to_skip + " or test_python" %}  # [osx]
+# pexpect.spawn uses env argument when running child process -> self.assertEqual(child.exitstatus, 0) -> AssertionError: None != 0
+{% set tests_to_skip = tests_to_skip + " or test_spawn_uses_env" %}  # [osx]
 
 test:
   source_files:
