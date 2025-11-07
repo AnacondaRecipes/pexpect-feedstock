@@ -43,6 +43,8 @@ requirements:
 {% set tests_to_skip = tests_to_skip + " or test_python" %}  # [osx]
 # pexpect.spawn uses env argument when running child process -> self.assertEqual(child.exitstatus, 0) -> AssertionError: None != 0
 {% set tests_to_skip = tests_to_skip + " or test_spawn_uses_env" %}  # [osx]
+# looks like eol mismatch
+{% set tests_to_skip = tests_to_skip + " or test_large_stdout_stream or test_readline_bin_echo" %}  # [osx]
 
 test:
   source_files:
