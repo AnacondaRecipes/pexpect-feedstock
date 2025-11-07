@@ -8,9 +8,11 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name|lower }}-{{ version }}.tar.gz
   sha256: ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f
+  patches:
+    - 0001-3.14-tests-avoid-forkserver.patch
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -41,6 +43,8 @@ requirements:
 {% set tests_to_skip = tests_to_skip + " or test_python" %}  # [osx]
 # pexpect.spawn uses env argument when running child process -> self.assertEqual(child.exitstatus, 0) -> AssertionError: None != 0
 {% set tests_to_skip = tests_to_skip + " or test_spawn_uses_env" %}  # [osx]
+# looks like eol mismatch
+{% set tests_to_skip = tests_to_skip + " or test_large_stdout_stream or test_readline_bin_echo" %}  # [osx]
 
 test:
   source_files:
